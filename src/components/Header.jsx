@@ -4,15 +4,15 @@ import { NavLink } from "react-router-dom";
 
 const Header = () => {
     return (
-        <Box>
-            <Box bgColor="#00ACEE" px={24} py={1}>
-                <Flex gap={2} alignItems="center">
+        <Box position="relative">
+            <Box bgColor="#00ACEE" px={24} h="5vh">
+                <Flex gap={2} alignItems="center" h="full">
                     <Icon as={IoRestaurantOutline} color="white" boxSize={6} />
                     <Text color="white" fontSize="xl">Alan Resto</Text>
                 </Flex>
             </Box>
-            <Box px={24} boxShadow="lg">
-                <Flex>
+            <Box px={24} boxShadow="base" h="5vh">
+                <Flex alignItems="center" h="full">
                     <NavLink
                         to="/food"
                         style={({ isActive }) => {
@@ -23,7 +23,6 @@ const Header = () => {
                                 fontWeight: 500,
                             };
                         }}
-                        end
                     >
                         Food
                     </NavLink>
