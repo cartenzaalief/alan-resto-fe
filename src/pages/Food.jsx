@@ -1,10 +1,11 @@
-import { Box, Button, Image, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Image, Table, TableContainer, Tbody, Td, Text, Th, Thead, Tr, useToast } from "@chakra-ui/react";
 import Axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Food = () => {
     const navigate = useNavigate();
+    const toast = useToast();
 
     const [foodList, setFoodList] = useState([]);
 
@@ -45,10 +46,16 @@ const Food = () => {
 
     const deleteFood = async (index) => {
         try {
-            console.log(index);
             let res = await Axios.delete(process.env.REACT_APP_BASE_URL + `/food/delete/${index}`);
-            alert(res.data.message);
-            foodData();
+            toast({
+                title: res.data.message,
+                position: 'top',
+                description: "We've deleted your selected food.",
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                onCloseComplete: () => foodData(),
+            });
         } catch (error) {
             console.log(error);
         }
