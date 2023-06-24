@@ -1,12 +1,14 @@
-import { Box, Button, Flex, FormControl, FormLabel, Icon, Input, InputGroup, InputLeftAddon, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, FormControl, FormLabel, Icon, Input, InputGroup, InputLeftAddon, Text, useToast } from "@chakra-ui/react";
 import Axios from "axios";
 import { useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 
 const FoodAdd = () => {
+    const toast = useToast();
+
     const [name, setName] = useState("");
     const [image, setImage] = useState(null);
-    const [price, setPrice] = useState(0);
+    const [price, setPrice] = useState("");
 
     const inputRef = useRef();
 
@@ -30,7 +32,19 @@ const FoodAdd = () => {
                     "Content-Type": "multipart/form-data"
                 }
             });
-            alert(res.data.message);
+            toast({
+                title: res.data.message,
+                position: 'top',
+                description: "We've added new food for you.",
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+                onCloseComplete: () => {
+                    setName("");
+                    setImage(null);
+                    setPrice("");
+                },
+            });
         } catch (error) {
             console.log(error);
         }
@@ -42,7 +56,7 @@ const FoodAdd = () => {
                 <Text color="#00ACEE" fontWeight="500">Tambahkan Menu</Text>
                 <FormControl mt={6}>
                     <FormLabel>Nama Menu</FormLabel>
-                    <Input onChange={(event) => setName(event.target.value)} />
+                    <Input value={name} onChange={(event) => setName(event.target.value)} />
                 </FormControl>
                 <FormControl mt={6}>
                     <FormLabel>Gambar</FormLabel>
@@ -90,7 +104,7 @@ const FoodAdd = () => {
                     <FormLabel>Harga</FormLabel>
                     <InputGroup>
                         <InputLeftAddon children="Rp." bgColor="#00ACEE" color="white" />
-                        <Input type="number" onChange={(event) => setPrice(event.target.value)} />
+                        <Input type="number" value={price} onChange={(event) => setPrice(event.target.value)} />
                     </InputGroup>
                 </FormControl>
                 <Flex mt={6} justifyContent="flex-end">
