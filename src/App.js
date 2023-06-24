@@ -6,12 +6,14 @@ import { Route, Routes } from "react-router-dom";
 import Food from "./pages/Food";
 import FoodAdd from "./pages/FoodAdd";
 import Transaksi from "./pages/Transaksi";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
+        <Route path="/" element={<Home />} />
         <Route path="/food" element={<Food />} />
         <Route path="/food/add" element={<FoodAdd />} />
         <Route path="/transaksi" element={<Transaksi />} />
